@@ -26,8 +26,8 @@ def gen_uuid():
 class SceneAlgorithm:
     @staticmethod
     def detect_scenes(input_path='', threshold=0.5, ffprobe_path='', ffmpeg_path=''):
-        with tempfile.TemporaryDirectory() as tmpdir:
-            output_path = os.path.join(tmpdir, f"{gen_uuid()}.txt")
+        output_path = f"{gen_uuid()}.txt"
+        try:
             command = [
                 ffmpeg_path,
                 '-hide_banner',
@@ -37,7 +37,6 @@ class SceneAlgorithm:
                 '-f', 'null', '-'
             ]
             subprocess.run(command)
-            # output_path = './test.txt'
             res = [0]
             pattern = r'pts_time:([\d.]+)'
             with open(output_path, mode='r') as f:
@@ -48,3 +47,6 @@ class SceneAlgorithm:
                         res.append(float(match.group(1)))
             res.append(get_video_duration(ffprobe_path, input_path))
             return res
+        finally:
+            if os.path.exists(output_path):
+                os.remove(output_path)

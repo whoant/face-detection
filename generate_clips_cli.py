@@ -10,7 +10,7 @@ def main():
     parser.add_argument('--words-json', required=True, help='Path to JSON file containing words list')
     parser.add_argument('--output', required=False, help='Path to output JSON file (default: stdout)')
     parser.add_argument('--ffprobe-path', required=True, help='Path to ffprobe binary')
-    parser.add_argument('--ffmpeg-path', required=False, help='Path to ffmpeg binary')
+    parser.add_argument('--ffmpeg-path', required=True, help='Path to ffmpeg binary')
     args = parser.parse_args()
     print('Generating video clips...')
     # Load words from JSON file

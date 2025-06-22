@@ -2,6 +2,7 @@ import re
 import subprocess
 import tempfile
 import uuid
+import os
 
 
 def get_video_duration(ffprobe_path, video_path):
@@ -26,7 +27,7 @@ class SceneAlgorithm:
     @staticmethod
     def detect_scenes(input_path='', threshold=0.5, ffprobe_path='', ffmpeg_path=''):
         with tempfile.TemporaryDirectory() as tmpdir:
-            output_path = f"{tmpdir}/{gen_uuid()}.txt"
+            output_path = os.path.join(tmpdir, f"{gen_uuid()}.txt")
             command = [
                 ffmpeg_path,
                 '-hide_banner',

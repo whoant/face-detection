@@ -9,7 +9,8 @@ def main():
     parser.add_argument('--video-path', required=True, help='Path to the local video file')
     parser.add_argument('--words-json', required=True, help='Path to JSON file containing words list')
     parser.add_argument('--output', required=False, help='Path to output JSON file (default: stdout)')
-    parser.add_argument('--ffprobe-path', required=False, help='Path to ffprobe binary (optional)')
+    parser.add_argument('--ffprobe-path', required=True, help='Path to ffprobe binary')
+    parser.add_argument('--ffmpeg-path', required=False, help='Path to ffmpeg binary')
     args = parser.parse_args()
     print('Generating video clips...')
     # Load words from JSON file
@@ -17,7 +18,7 @@ def main():
         words = json.load(f)
 
     # Run clip generation
-    generator = ClipGenerator(words=words, video_path=args.video_path, ffprobe_path=args.ffprobe_path if args.ffprobe_path else None)
+    generator = ClipGenerator(words=words, video_path=args.video_path, ffprobe_path=args.ffprobe_path, ffmpeg_path=args.ffmpeg_path)
     clips = generator.process()
 
     # Output result

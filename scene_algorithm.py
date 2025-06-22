@@ -24,11 +24,11 @@ def gen_uuid():
 
 class SceneAlgorithm:
     @staticmethod
-    def detect_scenes(input_path='', threshold=0.5, ffprobe_path=''):
+    def detect_scenes(input_path='', threshold=0.5, ffprobe_path='', ffmpeg_path=''):
         with tempfile.TemporaryDirectory() as tmpdir:
             output_path = f"{tmpdir}/{gen_uuid()}.txt"
             command = [
-                'ffmpeg',
+                ffmpeg_path,
                 '-hide_banner',
                 '-loglevel', 'error',
                 '-i', input_path,

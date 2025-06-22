@@ -5,10 +5,11 @@ from scene_algorithm import SceneAlgorithm
 
 
 class ClipGenerator:
-    def __init__(self, words: List[Dict[str, Any]], video_path: str, ffprobe_path: Optional[str] = None):
+    def __init__(self, words: List[Dict[str, Any]], video_path: str, ffprobe_path: str, ffmpeg_path: str) -> None:
         self.words = words
         self.video_path = video_path
         self.ffprobe_path = ffprobe_path
+        self.ffmpeg_path = ffmpeg_path
 
     def process(self) -> List[Dict[str, Any]]:
         """
@@ -22,7 +23,7 @@ class ClipGenerator:
     def generate_clips(self) -> List[Dict[str, Any]]:
         def detect_scenes() -> List[Dict[str, Any]]:
             clips = []
-            timeline_scenes = SceneAlgorithm.detect_scenes(self.video_path, threshold=0.1, ffprobe_path=self.ffprobe_path)  # type: ignore
+            timeline_scenes = SceneAlgorithm.detect_scenes(self.video_path, threshold=0.1, ffprobe_path=self.ffprobe_path, ffmpeg_path=self.ffmpeg_path)  # type: ignore
             for i in range(len(timeline_scenes) - 1):
                 start = timeline_scenes[i]
                 end = timeline_scenes[i + 1]
